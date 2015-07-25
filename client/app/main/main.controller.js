@@ -53,7 +53,7 @@ angular.module('stockApp')
             if (data.query.results === null) {
               cb(false);
             } else {
-              var tmp = data.query.results.quote.map(function(obj) {
+              var tmp = data.query.results.quote.reverse().map(function(obj) {
                 return obj.Close;
               });
               var color = rnd();
@@ -65,7 +65,22 @@ angular.module('stockApp')
                 pointHighlightStroke: "rgba(151,187,205,1)",
                 data: tmp
               }
+              var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'August', 'October', 'November', 'December'];
+              var numDays = [20, 19, 22, 22, 20, 22, 22, 21, 21, 21, 19, 22];
+              var curr = 0;
+              var count = 1;
               chartData.labels = tmp.map(function(data){
+
+               if (count === 1) {
+                      count += 1;
+                      return months[curr++];
+                }
+
+                count += 1;
+
+                if (count === numDays[curr]) {
+                  count = 1;
+                }
                 return '';
               });
               chartData.datasets.push(dset);
@@ -91,15 +106,9 @@ angular.module('stockApp')
 
     $scope.names = [];
     $scope.colors = [];
-    var now = new Date();
-    var start = new Date(now.getFullYear(), 0, 0);
-    var diff = now - start;
-    var oneDay = 1000 * 60 * 60 * 24;
-    var day = Math.floor(diff / oneDay);
-    var lbls = Array.apply(null, new Array(day)).map(function(){return ''});
     var chartData = {
       datasets: [{label: 'default_so_chartjs_works', data: 0}],
-      labels: lbls
+      labels: ['']
     }; 
     var ctx = document.getElementById('graph').getContext('2d');
     $http.get('/api/things/').success(function(data) {

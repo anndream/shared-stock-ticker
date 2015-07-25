@@ -1,9 +1,9 @@
-.col-xs-offset-2.col-xs-8
+.col-xs-offset-1.col-xs-10
   canvas#graph
 .col-xs-offset-2.col-xs-8#names
-  div(ng-repeat='name in names')
-    .col-xs-4.name {{name}}
-      i.fa.fa-times.closebutton(ng-click='destroy(name)')
+  div(ng-repeat='name in names track by $index')
+    .col-xs-4.name(style='background-color: {{colors[$index]}}') {{names[$index]}}
+      i.fa.fa-times.closebutton(ng-click='destroy(names[$index])')
 
 .row
   .col-xs-offset-2.col-xs-8

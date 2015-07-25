@@ -1,0 +1,13 @@
+.col-xs-offset-2.col-xs-8
+  canvas#graph
+.col-xs-offset-2.col-xs-8#names
+  div(ng-repeat='name in names')
+    .col-xs-4.name {{name}}
+      i.fa.fa-times.closebutton(ng-click='destroy(name)')
+
+.row
+  .col-xs-offset-2.col-xs-8
+    form#input_group(ng-submit='submit(query)')
+      .form-group
+        input#textbox(type='text', ng-model='query', placeholder='Add a new stock symbol here...')
+        button.btn.btn-primary#addbutton(type='submit') Add
